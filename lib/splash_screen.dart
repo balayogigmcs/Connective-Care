@@ -13,7 +13,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   bool _showConnectiveCare = false;
 
   late AnimationController _controller;
-  late Animation<double> _animation;
+  late Animation<Offset> _offsetAnimation;
 
   @override
   void initState() {
@@ -23,7 +23,13 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       vsync: this,
     );
 
-    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
+    _offsetAnimation = Tween<Offset>(
+      begin: const Offset(-1.0, 0.0),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    ));
 
     Future.delayed(const Duration(seconds: 4), () {
       setState(() {
@@ -72,42 +78,19 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                 : const SizedBox.shrink(),
           ),
           if (_showConnectiveCare)
-            AnimatedBuilder(
-              animation: _animation,
-              builder: (context, child) {
-                return Positioned(
-                  top: 100 + (_animation.value * 100), // Adjust the end position as needed
-                  left: 0,
-                  right: 0,
-                  child: Opacity(
-                    opacity: _animation.value,
-                    child: Column(
-                      children: [
-                        if (_animation.value >= 0.5)
-                          Text(
-                            'Connective',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 0, 0, 0),
-                            ),
-                          ),
-                        if (_animation.value >= 1.0)
-                          Text(
-                            'Care',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 0, 0, 0),
-                            ),
-                          ),
-                      ],
-                    ),
+            SlideTransition(
+              position: _offsetAnimation,
+              child: const Center(
+                child: Text(
+                  'Connective Care',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 36.0,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 0, 0, 0),
                   ),
-                );
-              },
+                ),
+              ),
             ),
         ],
       ),
