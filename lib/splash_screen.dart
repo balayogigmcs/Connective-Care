@@ -61,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
             child: _showWelcome
                 ? DefaultTextStyle(
                     style: const TextStyle(
-                      fontSize: 24.0,
+                      fontSize: 28.0,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 0, 0, 0),
                     ),
@@ -78,16 +78,21 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                 : const SizedBox.shrink(),
           ),
           if (_showConnectiveCare)
-            SlideTransition(
-              position: _offsetAnimation,
-              child: const Center(
-                child: Text(
-                  'Connective Care',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 36.0,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 0, 0, 0),
+            Positioned(
+              top: MediaQuery.of(context).size.height / 5, // Adjust this value to place text between top and center
+              left: 0,
+              right: 0,
+              child: SlideTransition(
+                position: _offsetAnimation,
+                child: const Center(
+                  child: Text(
+                    'CONNECTIVE CARE',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 36.0,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 0, 0, 0),
+                    ),
                   ),
                 ),
               ),
