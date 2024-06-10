@@ -1,32 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:cc/authentication/main_authentication.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+class AnimateScreen extends StatefulWidget {
+  const AnimateScreen({super.key});
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  _AnimateScreenState createState() => _AnimateScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
-  //bool _showWelcome = true;
+class _AnimateScreenState extends State<AnimateScreen> {
   bool _showConnectiveCare = true;
   bool _showSubheading = false;
 
   @override
   void initState() {
     super.initState();
-    // Future.delayed(const Duration(seconds: 4), () {
-    //   setState(() {
-    //     //_showWelcome = false;
-    //     _showConnectiveCare = true;
-    //   });
     Future.delayed(const Duration(seconds: 3), () {
       setState(() {
         _showSubheading = true;
       });
     });
-    //});
   }
 
   @override
@@ -40,30 +34,34 @@ class _SplashScreenState extends State<SplashScreen> {
               fit: BoxFit.cover,
             ),
           ),
-          // Center(
-          //   child: _showWelcome
-          //       ? DefaultTextStyle(
-          //           style: const TextStyle(
-          //             fontSize: 28.0,
-          //             fontWeight: FontWeight.bold,
-          //             color: Color.fromARGB(255, 0, 0, 0),
-          //           ),
-          //           child: AnimatedTextKit(
-          //             animatedTexts: [
-          //               TypewriterAnimatedText(
-          //                 'Welcome to Connective Care',
-          //                 speed: const Duration(milliseconds: 100),
-          //               ),
-          //             ],
-          //             totalRepeatCount: 1,
-          //           ),
-          //         )
-          //       : const SizedBox.shrink(),
-          // ),
+          Positioned(
+            top: 60,
+            right: 20,
+            child: OutlinedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const MainAuthentication()));
+              },
+              style: OutlinedButton.styleFrom(
+                //backgroundColor: Colors.blue,
+                //foregroundColor: Colors.white,
+                textStyle: const TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              child: const Text(
+                'Sign In',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ),
           if (_showConnectiveCare)
             Positioned(
-              top: MediaQuery.of(context).size.height /
-                  4, // Adjust this value to place text between top and center
+              top: MediaQuery.of(context).size.height / 4,
               left: 0,
               right: 0,
               child: DefaultTextStyle(
@@ -78,7 +76,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       TypewriterAnimatedText(
                         'CONNECTIVE CARE',
                         speed: const Duration(milliseconds: 100),
-                        cursor: ''
+                        cursor: '',
                       ),
                     ],
                     totalRepeatCount: 1,
